@@ -73,17 +73,58 @@ while True:
                     print("Venta actual: {ventas[i]}")
                     nuevo_producto = input("Nuevo nombre del producto: ")
                     nueva_cantidad = int(input("Nueva cantidad: "))
+                    nuevo_precio = float(input("Nuevo precio unitario: "))
+
+                    ventas[i][1] = nuevo_producto
+                    ventas[i][2] = nueva_cantidad
+                    ventas[i][3] = nuevo_precio
+
+                print("Venta modificada con éxito.")
+                modificada = True
+                break
+            if not modificada:
+                print("No se encontró ninguna venta con ese ID.")
+        except ValueError:
+            print("ingrese datos válidos.")
 
 
 
     elif opcion == "5":
         print("Eliminar")
+        try:
+            id_eliminar = int(input("Ingrese el ID de la venta que desea eliminar: "))
+            eliminada = False
+            for i in range(len(ventas)):
+                if ventas[i][0] == id_eliminar:
+                    print(f"Venta encontrada: {ventas[i]}")
+                    confirmar = input("¿Seguro que desea eliminarla? (s/n): ")
+                    if confirmar.lower() == "s":
+                        ventas.pop(i)
+                        print("venta eliminada con éxito.")
+                    else:
+                        print("eliminación cancelada.")
+                    eliminada = True
+                    break
+            if not eliminada:
+                print("No se encontró ninguna venta con ese ID.")
+        except ValueError:
+            print("ingrese un ID válido.")
+        
     elif opcion == "6":
         print("Calcular ingreso total")
+        if len(ventas) == 0:
+            print("No hay ventas registradas.")
+        else:
+            total_ingresos = 0
+            for venta in ventas:
+                total_ingresos += venta[2] * venta[3]
+            print(f"El ingreso total es: {total_ingresos}")
+
     elif opcion == "7":
         print("Salir")
         break
     else:
         print("Opcion no válida")
+
 
 
